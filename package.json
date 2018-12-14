@@ -1,6 +1,6 @@
 {
-    "name": "linecompletor",
-    "displayName": "LineCompletor",
+    "name": "completeline",
+    "displayName": "Complete Line",
     "description": "Completes a line of code",
     "version": "0.0.1",
     "engines": {
