@@ -15,7 +15,6 @@ interface SuggestionContext {
     parentLineKeyword: string;
     parentLineText: string;
     isWithinLoop: boolean;
-
     previousLine: Line | undefined;
     parentLines: Line[];
     nextLine: Line | undefined;
@@ -56,25 +55,25 @@ const suggestions: Array<Suggestion> = [
     {
         label: "for (let index of @1)...",
         snippet: "for (let ${1:index} of @1) {\r\t$2\r}",
-        languages: ["javascript", "typescript"],
+        languages: ["javascript", "javascriptreact", "typescript", "typescriptreact"],
         when: c => c.previousLineText.match("^let\\s+(\\w+)\\s*=.*")
     },
     {
         label: "for (let index of @1)...",
         snippet: "for (let ${1:index} of @1) {\r\t$2\r}",
-        languages: ["javascript", "typescript"],
+        languages: ["javascript", "javascriptreact", "typescript", "typescriptreact"],
         when: c => c.previousLineText.match("^const\\s+(\\w+)\\s*=.*")
     },
     {
         label: "for (let index of @1)...",
         snippet: "for (let ${1:index} of @1) {\r\t$2\r}",
-        languages: ["javascript", "typescript"],
+        languages: ["javascript", "javascriptreact", "typescript", "typescriptreact"],
         when: c => c.previousLineText.match("^var\\s+(\\w+)\\s*=.*")
     },
     {
         label: "for (let index of @1)...",
         snippet: "for (let ${1:index} of @1) {\r\t$2\r}",
-        languages: ["javascript", "typescript"],
+        languages: ["javascript", "javascriptreact", "typescript", "typescriptreact"],
         when: c => c.previousLineText.match("^(\\w+)\\s*=.*")
     },
 
@@ -92,7 +91,7 @@ const suggestions: Array<Suggestion> = [
         when: c => c.previousLineText.match("^(\\w+)\\s*=.*")
     },
 
-    // other suggestions
+    // more suggestions
     {
         label: "else...",
         snippet: "else {\r\t$1\r}",
@@ -130,6 +129,8 @@ const suggestions: Array<Suggestion> = [
     }
 ];
 
+const supportedLanguages = ["typescript", "typescriptreact", "javascript", "javascriptreact", "csharp", "c", "cpp"];
+
 export function activate(context: vscode.ExtensionContext) {
     let disposable = vscode.commands.registerCommand("extension.completeLine", () => completeLine());
     context.subscriptions.push(disposable);
@@ -138,6 +139,10 @@ export function activate(context: vscode.ExtensionContext) {
 function completeLine(): void {
     let editor = vscode.window.activeTextEditor;
     if (!editor) {
+        return;
+    }
+       
+    if (supportedLanguages.indexOf(editor.document.languageId) < 0) {
         return;
     }
 
@@ -170,11 +175,12 @@ function completeEmptyLine(editor: vscode.TextEditor): void {
         nextLine: nextLine,
     };
 
-    let items = new Array<SnippetQuickPickItem>();
     const language = editor.document.languageId;
 
+    let items = new Array<SnippetQuickPickItem>();
+
     for (let suggestion of suggestions) {
-        if (suggestion.languages && !suggestion.languages.some(l => l === language)) {
+        if (suggestion.languages && suggestion.languages.indexOf(language) < 0)   {
             continue;
         }
 
@@ -184,18 +190,20 @@ function completeEmptyLine(editor: vscode.TextEditor): void {
         }
 
         let label = suggestion.label;
-        let value = suggestion.snippet;
+        let snippet = suggestion.snippet;
 
         if (Array.isArray(result)) {
             for (let index = 1; index < result.length; index++) {
                 let parameter = result[index];
                 label = label.replace("@" + index, parameter);
-                value = value.replace("@" + index, parameter);
+                snippet = snippet.replace("@" + index, parameter);
             }
         }
 
-        items.push({ label: label, snippet: new vscode.SnippetString(value) });
+        items.push({ label: label, snippet: new vscode.SnippetString(snippet) });
     }
+
+    // todo: add standard snippets to list
 
     // if nothing is available, show standard snippets
     if (items.length === 0) {
@@ -404,7 +412,7 @@ function isStatement(line: string): boolean {
 
 function isWithinLoop(parentLines: Line[]): boolean {
     for (let line of parentLines) {
-        if (loopKeywords.some(keyword => line.keyword === keyword)) {
+        if (loopKeywords.indexOf(line.keyword) >= 0) {
             return true;
         }
     }
@@ -431,3 +439,4 @@ class Line {
 
 export function deactivate() {
 }
+
