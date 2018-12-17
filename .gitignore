@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /out
+package-lock.json
 
 # misc
 .DS_Store
