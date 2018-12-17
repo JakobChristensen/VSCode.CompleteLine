@@ -3,6 +3,10 @@
     "displayName": "Complete Line",
     "description": "Completes a line of code",
     "version": "1.0.0",
+    "publisher": "refactor11",
+    "author": {
+        "name": "Jakob Christensen"
+    },
     "engines": {
         "vscode": "^1.30.0"
     },
