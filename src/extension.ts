@@ -152,7 +152,7 @@ const suggestions: Array<Suggestion> = [
     }
 ];
 
-const supportedLanguages = ["typescript", "typescriptreact", "javascript", "javascriptreact", "csharp", "c", "cpp"];
+const supportedLanguages = ["typescript", "typescriptreact", "javascript", "javascriptreact", "csharp", "c", "cpp", "rust"];
 
 export function activate(context: vscode.ExtensionContext) {
     let disposable = vscode.commands.registerCommand("extension.completeLine", () => completeLine());
