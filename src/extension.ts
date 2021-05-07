@@ -29,7 +29,7 @@ enum AdjacentLine {
     Next = 1
 }
 
-const blockKeywords = ["if", "for", "foreach", "while", "do", "function", "else", "class", "switch", "try", "catch", "with"];
+const blockKeywords = ["if", "for", "foreach", "while", "do", "function", "else", "class", "switch", "try", "catch", "with", "public", "protected", "private", "internal"];
 
 const loopKeywords = ["for", "foreach", "do", "while"];
 

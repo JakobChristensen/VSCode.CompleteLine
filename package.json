@@ -2,13 +2,13 @@
     "name": "completeline",
     "displayName": "Complete Line",
     "description": "Completes a line of code",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publisher": "refactor11",
     "author": {
         "name": "Jakob Christensen"
     },
     "engines": {
-        "vscode": "^1.30.0"
+        "vscode": "^1.56.0" 
     },
     "categories": [
         "Other"
@@ -51,10 +51,15 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^3.1.4",
-        "vscode": "^1.1.25",
-        "tslint": "^5.8.0",
-        "@types/node": "^8.10.25",
-        "@types/mocha": "^2.2.42"
-    }
+        "@types/vscode": "^1.56.0",
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.0.4",
+		"@types/node": "^12.11.7",
+		"eslint": "^7.19.0",
+		"@typescript-eslint/eslint-plugin": "^4.14.1",
+		"@typescript-eslint/parser": "^4.14.1",
+		"glob": "^7.1.6",
+		"mocha": "^8.2.1",
+		"typescript": "^4.1.3",
+		"vscode-test": "^1.5.0"     }
 }
