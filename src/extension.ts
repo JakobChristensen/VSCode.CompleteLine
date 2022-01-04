@@ -152,7 +152,7 @@ const suggestions: Array<Suggestion> = [
     }
 ];
 
-const supportedLanguages = ["typescript", "typescriptreact", "javascript", "javascriptreact", "csharp", "c", "cpp", "rust"];
+const supportedLanguages = ["typescript", "typescriptreact", "javascript", "javascriptreact", "csharp", "c", "cpp", "rust", "vue"];
 
 export function activate(context: vscode.ExtensionContext) {
     let disposable = vscode.commands.registerCommand("extension.completeLine", () => completeLine());
@@ -262,8 +262,11 @@ function completePartialLine(editor: vscode.TextEditor): void {
     }
 
     let snippet = "";
-
-    if (blockKeywords.some(keyword => trimmedLineText.startsWith(keyword)) && !(trimmedLineText.endsWith("{") || nextTrimmedLineText.startsWith("{"))) {
+    const methodRegex = /^\s*([a-zA-Z_]\w+)\s*\(.*\)/;
+    if (methodRegex.test(trimmedLineText) || 
+        blockKeywords.some(keyword => trimmedLineText.startsWith(keyword)) && 
+        !(trimmedLineText.endsWith("{") || nextTrimmedLineText.startsWith("{"))
+    ) {
         snippet = getClosingParentheses(line) + " {\n\t$0\n}";
     }
     else if (trimmedLineText.endsWith("{")) {
