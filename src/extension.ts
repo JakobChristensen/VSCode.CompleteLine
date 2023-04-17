@@ -121,6 +121,11 @@ const suggestions: Array<Suggestion> = [
         when: c => c.previousLineKeyword === "if"
     },
     {
+        label: "else if...",
+        snippet: "else if {\n\t$0\n}",
+        when: c => c.previousLineKeyword === "if"
+    },
+    {
         label: "case...",
         snippet: "case ${1:condition}:\n\t$0\n\tbreak;",
         when: c => c.parentLineKeyword === "switch" || c.previousLineKeyword === "case"
@@ -262,7 +267,7 @@ function completePartialLine(editor: vscode.TextEditor): void {
     }
 
     let snippet = "";
-    const methodRegex = /^\s*([a-zA-Z_]\w+)\s*\(.*\)/;
+    const methodRegex = /^\s*((async)\s+)?\s*((get|set|function)\s+)?\s*([a-zA-Z_]\w+)\s*\(.*\)/;
     if (methodRegex.test(trimmedLineText) || 
         blockKeywords.some(keyword => trimmedLineText.startsWith(keyword)) && 
         !(trimmedLineText.endsWith("{") || nextTrimmedLineText.startsWith("{"))
