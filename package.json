@@ -2,7 +2,7 @@
   "name": "completeline",
   "displayName": "Complete Line",
   "description": "Completes a line of code",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "refactor11",
   "author": {
     "name": "Jakob Christensen"
